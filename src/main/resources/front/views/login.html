@@ -15,13 +15,13 @@
         <div class="user_options-text">
             <div class="user_options-unregistered">
                 <h2 class="user_unregistered-title">Don't have an account?</h2>
-                <p class="user_unregistered-text">This is a Task Performance in WebSys (midterms) by Crissa Aguilos.</p>
+                <p class="user_unregistered-text">NTS Technical task by Kaliaskaruly Daneker</p>
                 <button class="user_unregistered-signup" id="signup-button">Register</button>
             </div>
 
             <div class="user_options-registered">
                 <h2 class="user_registered-title">Have an account?</h2>
-                <p class="user_registered-text">This is a Task Performance in WebSys (midterms) by Crissa Aguilos.</p>
+                <p class="user_registered-text">NTS Technical task by Kaliaskaruly Daneker</p>
                 <button class="user_registered-login" id="login-button">Login</button>
             </div>
         </div>
@@ -32,34 +32,30 @@
                 <form class="forms_form">
                     <fieldset class="forms_fieldset">
                         <div class="forms_field">
-                            <input type="email" placeholder="Email" class="forms_field-input" required autofocus />
+                            <input type="email" id="l_email" placeholder="Email" class="forms_field-input" required autofocus />
                         </div>
                         <div class="forms_field">
-                            <input type="password" placeholder="Password" class="forms_field-input" required />
+                            <input type="password" id="l_password" placeholder="Password" class="forms_field-input" required />
                         </div>
                     </fieldset>
                     <div class="forms_buttons">
-                        <button type="button" class="forms_buttons-forgot">Forgot password?</button>
-                        <input type="submit" value="Log In" class="forms_buttons-action">
+                        <input type="submit" value="Log In" id="login_confirm_btn" class="forms_buttons-action">
                     </div>
                 </form>
             </div>
             <div class="user_forms-signup">
                 <h2 class="forms_title">Register</h2>
                 <form class="forms_form">
-                    <fieldset class="forms_fieldset">
+                    <fieldset  class="forms_fieldset">
                         <div class="forms_field">
-                            <input type="text" placeholder="Full Name" class="forms_field-input" required />
+                            <input type="email" placeholder="Email" id="r_email" class="forms_field-input" required />
                         </div>
                         <div class="forms_field">
-                            <input type="email" placeholder="Email" class="forms_field-input" required />
-                        </div>
-                        <div class="forms_field">
-                            <input type="password" placeholder="Password" class="forms_field-input" required />
+                            <input type="password" placeholder="Password" id="r_password" class="forms_field-input" required />
                         </div>
                     </fieldset>
                     <div class="forms_buttons">
-                        <input type="submit" value="Register" class="forms_buttons-action">
+                        <input type="submit" value="Register" id="registration_confirm_btn" class="forms_buttons-action">
                     </div>
                 </form>
             </div>
@@ -67,7 +63,7 @@
     </div>
 </section>
 
-<script  src="../js/registration.js"></script>
+<script  src="../js/login.js"></script>
 
 </body>
 </html>

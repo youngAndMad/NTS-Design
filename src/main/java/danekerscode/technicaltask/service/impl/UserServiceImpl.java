@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(User.class, id));
     }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }
