@@ -6,9 +6,14 @@ import danekerscode.technicaltask.exception.FileOperationException;
 import danekerscode.technicaltask.mapper.FileMapper;
 import danekerscode.technicaltask.service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +27,20 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public void download(String bucket, String key) {
+    @Async(value = "file-uploading")
+    public CompletableFuture<byte[]> download(String bucket, String key) {
+        var s3Object = amazonS3.getObject(bucket, key);
+
+        try (InputStream inputStream = s3Object.getObjectContent()) {
+            // Read the content of the input stream and convert it to a byte array
+            byte[] data = inputStream.readAllBytes();
+            return CompletableFuture.completedFuture(data);
+        } catch (IOException e) {
+            // Handle any exceptions that occur during the download process
+            CompletableFuture<byte[]> future = new CompletableFuture<>();
+            future.completeExceptionally(e);
+            return future;
+        }
 
     }
 

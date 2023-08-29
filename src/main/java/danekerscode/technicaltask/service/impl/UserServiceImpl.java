@@ -1,6 +1,7 @@
 package danekerscode.technicaltask.service.impl;
 
 import danekerscode.technicaltask.dto.UserDTO;
+import danekerscode.technicaltask.exception.EmailRegisteredException;
 import danekerscode.technicaltask.exception.EntityNotFoundException;
 import danekerscode.technicaltask.mapper.UserMapper;
 import danekerscode.technicaltask.model.User;
@@ -18,6 +19,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(UserDTO userDTO) {
+
+        var optional = userRepository.findUserByEmail(userDTO.email());
+
+        if (optional.isPresent()) {
+            throw new EmailRegisteredException(userDTO.email());
+        }
+
         var model = userMapper.toModel(userDTO);
 
         return userRepository.save(model);

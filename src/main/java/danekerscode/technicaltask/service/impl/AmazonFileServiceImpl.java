@@ -26,4 +26,10 @@ public class AmazonFileServiceImpl implements AmazonFileService {
                 .orElseThrow(() -> new EntityNotFoundException(AmazonFile.class, id));
 
     }
+
+    @Override
+    public AmazonFile findByName(String fileName) {
+        return amazonFileRepository.findAmazonFileByFileName(fileName)
+                .orElseThrow(() -> new EntityNotFoundException(AmazonFile.class));
+    }
 }

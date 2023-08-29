@@ -24,4 +24,11 @@ public class User {
     )
     private List<AmazonFile> files;
 
+
+    @OneToMany(
+            mappedBy = "owner",
+            cascade = CascadeType.ALL
+    )
+    private List<Log> logs;
+
 }
