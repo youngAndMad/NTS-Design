@@ -1,4 +1,11 @@
 spring:
+  mvc:
+    mapping: "/**"
+    allowed:
+      credentials: true
+      origin-patterns: "*"
+      headers: "*"
+      methods: "*"
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB_NAME}
     username: ${POSTGRES_USERNAME}
