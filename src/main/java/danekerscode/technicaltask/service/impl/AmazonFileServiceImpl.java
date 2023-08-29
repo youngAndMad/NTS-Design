@@ -44,7 +44,7 @@ public class AmazonFileServiceImpl implements AmazonFileService {
 
     @Override
     public AmazonFile upload(Long userId, MultipartFile file) {
-//        s3Service.upload(defaultBucket , convertToDateTime(file.getName()) , file);
+        s3Service.upload(defaultBucket ," convertToDateTime(file.getName())" , file);
         return null;
     }
 }

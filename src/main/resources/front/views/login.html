@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Register or Log-in</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300, 400, 500" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300, 400, 500" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="../styles/login.css">
+    <link rel="icon" href="../public/logo.webp">
 </head>
 <body>
 
@@ -31,10 +32,12 @@
                 <form class="forms_form">
                     <fieldset class="forms_fieldset">
                         <div class="forms_field">
-                            <input type="email" id="l_email" placeholder="Email" class="forms_field-input" required autofocus />
+                            <input type="email" id="l_email" placeholder="Email" class="forms_field-input" required
+                                   autofocus/>
                         </div>
                         <div class="forms_field">
-                            <input type="password" id="l_password" placeholder="Password" class="forms_field-input" required />
+                            <input type="password" id="l_password" placeholder="Password" class="forms_field-input"
+                                   required/>
                         </div>
                     </fieldset>
                     <div class="forms_buttons">
@@ -45,16 +48,18 @@
             <div class="user_forms-signup">
                 <h2 class="forms_title">Register</h2>
                 <form class="forms_form">
-                    <fieldset  class="forms_fieldset">
+                    <fieldset class="forms_fieldset">
                         <div class="forms_field">
-                            <input type="email" placeholder="Email" id="r_email" class="forms_field-input" required />
+                            <input type="email" placeholder="Email" id="r_email" class="forms_field-input" required/>
                         </div>
                         <div class="forms_field">
-                            <input type="password" placeholder="Password" id="r_password" class="forms_field-input" required />
+                            <input type="password" placeholder="Password" id="r_password" class="forms_field-input"
+                                   required/>
                         </div>
                     </fieldset>
                     <div class="forms_buttons">
-                        <input type="submit" value="Register" id="registration_confirm_btn" class="forms_buttons-action">
+                        <input type="submit" value="Register" id="registration_confirm_btn"
+                               class="forms_buttons-action">
                     </div>
                 </form>
             </div>
@@ -62,7 +67,76 @@
     </div>
 </section>
 
-<script  src="../js/login.js"></script>
+<script>
+    const signupButton = document.getElementById('signup-button')
+    const loginButton = document.getElementById('login-button')
+    const userForms = document.getElementById('user_options-forms')
+
+    signupButton.addEventListener('click', () => {
+        userForms.classList.remove('bounceRight')
+        userForms.classList.add('bounceLeft')
+    }, false)
+
+
+    loginButton.addEventListener('click', () => {
+        userForms.classList.remove('bounceLeft')
+        userForms.classList.add('bounceRight')
+    }, false)
+
+
+    const findById = id => document.getElementById(id).value
+    const loginConfirmButton = document.getElementById("login_confirm_btn")
+    const registrationConfirmButton = document.getElementById("registration_confirm_btn")
+
+    loginConfirmButton.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        let password = findById("l_password")
+        let email = findById("l_email")
+
+        fetch('http://localhost:8888/api/v1/user/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                    email: email,
+                    password: password
+                }
+            )
+        })
+            .then(res => res.json())
+            .then(res => set('user', res))
+            .catch(err => alert(err))
+
+    }, false)
+
+    registrationConfirmButton.addEventListener('click', (e) => {
+        e.preventDefault()
+        let password = findById("r_password")
+        let email = findById("r_email")
+
+        fetch(`http://localhost:8888/api/v1/user/register`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                    email: email,
+                    password: password
+                }
+            )
+        })
+            .then(res => res.json())
+            .then(res => set('user', res))
+            .catch(err => alert(err))
+
+    }, true)
+
+    const set = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+</script>
 
 </body>
 </html>
