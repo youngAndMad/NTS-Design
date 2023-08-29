@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tt
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  cloud:
+    aws:
+      region: us-east-1
+      credentials:
+        access-key: access
+        secret-key: secret
+      bucket:
+        default:
+          url: https://some_host:some_port
+          name: bucket_name
+server:
+  servlet:
+    context-path: /api/v1/
+  port: 8888
