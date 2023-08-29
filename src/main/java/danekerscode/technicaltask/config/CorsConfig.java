@@ -33,7 +33,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping(mapping)
-                        .allowCredentials(allowedCredentials)
+                        .allowCredentials(false)
                         .allowedOriginPatterns(originPatterns)
                         .allowedHeaders(allowedHeaders)
                         .allowedMethods(allowedMethods);
