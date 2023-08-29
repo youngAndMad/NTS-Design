@@ -1,6 +1,6 @@
-const signupButton = document.getElementById('signup-button'),
-    loginButton = document.getElementById('login-button'),
-    userForms = document.getElementById('user_options-forms')
+const signupButton = document.getElementById('signup-button')
+const loginButton = document.getElementById('login-button')
+const userForms = document.getElementById('user_options-forms')
 
 signupButton.addEventListener('click', () => {
     userForms.classList.remove('bounceRight')
@@ -37,7 +37,8 @@ loginConfirmButton.addEventListener('click', (e) => {
         )
     })
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => set('user', res))
+        .catch(err => alert(err))
 
 }, false)
 
@@ -46,7 +47,7 @@ registrationConfirmButton.addEventListener('click', (e) => {
     let password = findById("r_password")
     let email = findById("l_email")
 
-    fetch('http://localhost:8888/api/v1/user/login', {
+    fetch(`http://localhost:8888/api/v1/user/login`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -59,6 +60,9 @@ registrationConfirmButton.addEventListener('click', (e) => {
         )
     })
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => set('user', res))
+        .catch(err => alert(err))
 
 }, true)
+
+const set = (key, value) => localStorage.setItem(key, JSON.stringify(value))
