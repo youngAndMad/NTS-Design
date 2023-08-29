@@ -1,5 +1,6 @@
 package danekerscode.technicaltask.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +18,7 @@ public class Log {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
+
     private User owner;
 }

@@ -10,5 +10,5 @@ public interface AmazonFileService {
 
     AmazonFile findByName(String fileName);
 
-    AmazonFile upload(Long userId, MultipartFile file);
+    AmazonFile upload(Long userId, MultipartFile file,String fileName);
 }

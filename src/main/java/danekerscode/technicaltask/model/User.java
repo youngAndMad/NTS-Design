@@ -22,14 +22,16 @@ public class User {
 
     @OneToMany(
             mappedBy = "owner",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
     private List<AmazonFile> files;
 
 
     @OneToMany(
             mappedBy = "owner",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
     private List<Log> logs;
 

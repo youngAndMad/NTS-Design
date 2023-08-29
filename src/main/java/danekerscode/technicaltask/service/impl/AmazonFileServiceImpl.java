@@ -1,10 +1,12 @@
 package danekerscode.technicaltask.service.impl;
 
 import danekerscode.technicaltask.exception.EntityNotFoundException;
+import danekerscode.technicaltask.mapper.AmazonFileMapper;
 import danekerscode.technicaltask.model.AmazonFile;
 import danekerscode.technicaltask.repository.AmazonFileRepository;
 import danekerscode.technicaltask.service.AmazonFileService;
 import danekerscode.technicaltask.service.S3Service;
+import danekerscode.technicaltask.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class AmazonFileServiceImpl implements AmazonFileService {
 
     private final AmazonFileRepository amazonFileRepository;
     private final S3Service s3Service;
+    private final UserService userService;
+    private final AmazonFileMapper fileMapper;
 
     @Value("${spring.cloud.aws.bucket.default.name}")
     private String defaultBucket;
@@ -43,8 +47,13 @@ public class AmazonFileServiceImpl implements AmazonFileService {
     }
 
     @Override
-    public AmazonFile upload(Long userId, MultipartFile file) {
-        s3Service.upload(defaultBucket ," convertToDateTime(file.getName())" , file);
-        return null;
+    public AmazonFile upload(Long userId, MultipartFile file, String fileName) {
+        var owner = userService.findById(userId);
+        var date = convertToDateTime(fileName);
+
+        var model = fileMapper.toModel(date.toString(),owner , date);
+
+        s3Service.upload(defaultBucket, "%d/%s".formatted(owner.getId(), date.toString()), file);
+        return amazonFileRepository.save(model);
     }
 }
