@@ -21,8 +21,8 @@ public class LogServiceImpl implements LogService {
 
 
     @Override
-    public void add(LogCommandDTO dto, Long userId) {
-        var owner = userService.findById(userId);
+    public void add(LogCommandDTO dto) {
+        var owner = userService.findById(dto.userId());
 
         var model = logMapper.toModel(dto.content(), owner);
 

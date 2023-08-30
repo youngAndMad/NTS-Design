@@ -5,8 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../front/styles/index.css">
-    <link rel="icon" href="../front/public/logo.webp">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="icon" href="../public/logo.webp">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <title>NTS Design technical task</title>
@@ -132,9 +132,28 @@
             }
         ));
 
+        stompClient.send('/addLog', {}, JSON.stringify(
+            {
+                command: 'addLog',
+                userId: user.id,
+                content:'hello world'
+            }
+        ));
+
+        stompClient.send('/getLogs', {}, JSON.stringify(
+            {
+                command: 'logs',
+                userId: user.id,
+            }
+        ));
+
         stompClient.subscribe('/topic/fileInfo/' + user.id, (response) => {
-            console.log(response)
+            console.log('file info' , response)
         });
+
+        stompClient.subscribe('/topic/getLogs/' + user.id, response => {
+            console.log('logs' , response)
+        })
 
     });
 

@@ -10,5 +10,7 @@ public interface AmazonFileService {
 
     AmazonFile findByName(String fileName);
 
-    AmazonFile upload(Long userId, MultipartFile file,String fileName);
+    AmazonFile upload(Long userId, MultipartFile file, String fileName);
+
+    byte[] download(Long id);
 }

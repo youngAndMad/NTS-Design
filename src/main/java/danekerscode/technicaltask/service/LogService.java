@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface LogService {
 
-    void add(LogCommandDTO dto, Long userId);
+    void add(LogCommandDTO dto);
 
     List<Log> findUserLogs(Long userId);
 }
