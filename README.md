@@ -30,5 +30,6 @@ git clone https://github.com/youngAndMad/NTS-Design
 cd NTS-Design
 docker compose up -d
 ```
+**4. Open login page resources/front/views/login.html**
 The app will start running at <http://localhost:8888>
 Open API Docs: <resources/api-docs.json>
