@@ -23,6 +23,9 @@ public class LogController {
             LogCommandDTO dto
     ) {
         logService.add(dto);
+        var logs = logService.findUserLogs(dto.userId());
+
+        messagingTemplate.convertAndSend("/topic/getLogs/" + dto.userId(), logs);
     }
 
     @MessageMapping("/getLogs")

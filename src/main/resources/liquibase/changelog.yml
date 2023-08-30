@@ -31,9 +31,6 @@ databaseChangeLog:
                   name: content
                   type: VARCHAR(255)
               - column:
-                  name: downloadable
-                  type: boolean
-              - column:
                   name: owner_id
                   type: BIGINT
                   constraints:

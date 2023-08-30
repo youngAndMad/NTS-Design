@@ -1,6 +1,7 @@
 package danekerscode.technicaltask.exception.handler;
 
 import danekerscode.technicaltask.exception.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import java.util.function.BiFunction;
 
 import static org.springframework.http.HttpStatus.*;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
 

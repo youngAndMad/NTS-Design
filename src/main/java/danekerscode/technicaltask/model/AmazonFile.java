@@ -29,5 +29,4 @@ public class AmazonFile {
 
     private String filePath;
 
-    private Boolean downloadable;
 }
