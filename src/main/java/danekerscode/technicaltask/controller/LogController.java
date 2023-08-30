@@ -18,22 +18,6 @@ public class LogController {
     private final SimpMessagingTemplate messagingTemplate;
 
 
-    @GetMapping("{id}")
-    ResponseEntity<?> getUserLogs(
-            @PathVariable("id") Long userId
-    ) {
-        return ResponseEntity
-                .ok(logService.findUserLogs(userId));
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    void save(
-            @RequestBody LogCommandDTO dto
-    ) {
-        logService.add(dto);
-    }
-
     @MessageMapping("/addLog")
     void addLog(
             LogCommandDTO dto

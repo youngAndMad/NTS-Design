@@ -41,29 +41,6 @@
         }
       }
     },
-    "/log": {
-      "post": {
-        "tags": [
-          "log-controller"
-        ],
-        "operationId": "save",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogCommandDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
     "/file/simple-upload": {
       "post": {
         "tags": [
@@ -107,37 +84,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/log/{id}": {
-      "get": {
-        "tags": [
-          "log-controller"
-        ],
-        "operationId": "getUserLogs",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",

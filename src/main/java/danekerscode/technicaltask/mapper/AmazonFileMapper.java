@@ -16,8 +16,13 @@ import java.time.LocalDateTime;
 public interface AmazonFileMapper {
 
     @Mapping(target = "uploadedOn", expression = "java(time)")
-    @Mapping(target = "fileName", expression = "java(fileName)")
     @Mapping(target = "owner", expression = "java(owner)")
+    @Mapping(target = "fileName" , expression = "java(formatFileName(fileName))")
+    @Mapping(target = "id" , ignore = true)
     AmazonFile toModel(String fileName, User owner, LocalDateTime time);
+
+    default String formatFileName(String s){
+        return s.replace('T' , ' ');
+    }
 
 }

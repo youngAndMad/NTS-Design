@@ -19,7 +19,7 @@ public class AmazonFile {
     private Long id;
 
     private String fileName;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime uploadedOn;
 
     @ManyToOne
@@ -29,8 +29,4 @@ public class AmazonFile {
 
     private String filePath;
 
-    @PostPersist
-    private void setFilePath() {
-        this.filePath = "http://localhost:8888/api/v1/file/" + id;
-    }
 }

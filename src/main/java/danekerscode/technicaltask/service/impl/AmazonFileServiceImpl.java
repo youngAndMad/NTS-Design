@@ -55,7 +55,9 @@ public class AmazonFileServiceImpl implements AmazonFileService {
         var owner = userService.findById(userId);
         var date = convertToDateTime(fileName);
 
-        var model = fileMapper.toModel(date.toString(), owner, date);
+        var model = amazonFileRepository.saveAndFlush(fileMapper.toModel(date.toString(), owner, date));
+        model.setFilePath("http://localhost:8888/api/v1/download?id=" + model.getId());
+
 
         s3Service.upload(defaultBucket, "%d/%s".formatted(owner.getId(), date.toString()), file);
         return amazonFileRepository.save(model);
