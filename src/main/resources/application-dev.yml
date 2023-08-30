@@ -1,0 +1,40 @@
+spring:
+  liquibase:
+    change-log: liquibase/changelog.yml
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+  mvc:
+    mapping: "/**"
+    allowed:
+      credentials: true
+      origin-patterns: "*"
+      headers: "*"
+      methods: "*"
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/tt
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+  cloud:
+    aws:
+      region: us-east-1
+      credentials:
+        access-key: from_env
+        secret-key: from_env
+      bucket:
+        default:
+          name: from_env
+server:
+  servlet:
+    context-path: /api/v1/
+  port: 8888
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

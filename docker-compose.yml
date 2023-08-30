@@ -1,0 +1,31 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15.1
+    environment:
+      POSTGRES_DB: tt
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - ./configuration/postgres-event-service:/data/postgres
+    expose:
+      - "5432"
+    ports:
+      - "5433:5432"
+    command: -p 5432
+  app:
+    container_name: app
+    image: daneker/nts-tt
+    ports:
+      - "8888:8888"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      AWS_ACCESS_KEY: from_env
+      AWS_SECRET_KEY: from_env
+      AWS_BUCKET_NAME: from_env
+#    environment:
+#      - spring.cloud.aws.credentials.access-key: dde
