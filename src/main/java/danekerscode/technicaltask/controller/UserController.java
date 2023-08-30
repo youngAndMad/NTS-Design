@@ -2,10 +2,13 @@ package danekerscode.technicaltask.controller;
 
 import danekerscode.technicaltask.dto.UserDTO;
 import danekerscode.technicaltask.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import static danekerscode.technicaltask.utils.ReturnError.validateRequest;
 import static org.springframework.http.HttpStatus.*;
 
 @RequestMapping("user")
@@ -17,8 +20,10 @@ public class UserController {
 
     @PostMapping("register")
     ResponseEntity<?> register(
-            @RequestBody UserDTO dto
+            @RequestBody @Valid UserDTO dto,
+            BindingResult br
     ) {
+        validateRequest(br);
         return ResponseEntity
                 .status(201)
                 .body(userService.saveUser(dto));
@@ -28,14 +33,16 @@ public class UserController {
     @ResponseStatus(NO_CONTENT)
     void delete(
             @PathVariable Long id
-    ){
+    ) {
         userService.delete(id);
     }
 
     @PostMapping("login")
     ResponseEntity<?> login(
-        @RequestBody UserDTO userDTO
-    ){
+            @RequestBody @Valid UserDTO userDTO,
+            BindingResult br
+    ) {
+        validateRequest(br);
         return ResponseEntity
                 .ok(userService.login(userDTO));
     }

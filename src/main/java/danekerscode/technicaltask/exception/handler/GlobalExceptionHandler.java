@@ -34,6 +34,11 @@ public class GlobalExceptionHandler {
         return withDetails.apply(e, UNAUTHORIZED);
     }
 
+    @ExceptionHandler(InvalidUserPropertiesException.class)
+    ProblemDetail handle(InvalidUserPropertiesException e) {
+        return withDetails.apply(e, BAD_REQUEST);
+    }
+
 
     private final BiFunction<RuntimeException, HttpStatus, ProblemDetail> withDetails =
             (e, status) ->
