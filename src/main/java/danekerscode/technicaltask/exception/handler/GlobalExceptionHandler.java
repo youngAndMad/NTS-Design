@@ -29,6 +29,12 @@ public class GlobalExceptionHandler {
         return withDetails.apply(e, INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    ProblemDetail handle(BadCredentialsException e) {
+        return withDetails.apply(e, UNAUTHORIZED);
+    }
+
+
     private final BiFunction<RuntimeException, HttpStatus, ProblemDetail> withDetails =
             (e, status) ->
                     ProblemDetail.forStatusAndDetail(status, e.getMessage());

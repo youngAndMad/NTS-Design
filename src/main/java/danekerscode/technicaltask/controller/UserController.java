@@ -32,4 +32,13 @@ public class UserController {
         userService.delete(id);
     }
 
+    @PostMapping("login")
+    ResponseEntity<?> login(
+        @RequestBody UserDTO userDTO
+    ){
+        return ResponseEntity
+                .ok(userService.login(userDTO));
+    }
+
+
 }
