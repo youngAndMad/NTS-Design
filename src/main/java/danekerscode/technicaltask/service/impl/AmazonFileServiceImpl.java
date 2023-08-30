@@ -28,6 +28,10 @@ public class AmazonFileServiceImpl implements AmazonFileService {
 
     @Override
     public void delete(Long id) {
+        var file = findById(id);
+
+        s3Service.delete(defaultBucket, "%d/%s".formatted(file.getOwner().getId(), file.getFileName()));
+
         amazonFileRepository.delete(
                 this.findById(id)
         );
