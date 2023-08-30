@@ -4,11 +4,15 @@ import danekerscode.technicaltask.dto.UserDTO;
 import danekerscode.technicaltask.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.ArrayList;
 
 @Mapper(
-        imports = ArrayList.class
+        imports = ArrayList.class,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
 )
 public interface UserMapper {
 
