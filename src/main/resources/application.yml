@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    change-log: liquibase/changelog.yml
   servlet:
     multipart:
       max-request-size: 10MB
@@ -33,12 +35,6 @@ server:
   servlet:
     context-path: /api/v1/
   port: 8888
-springdoc:
-  api-docs:
-    enabled: true
-    path: /api/v1
-  swagger-ui:
-    path: /api/v1
 logging:
   level:
     org:
