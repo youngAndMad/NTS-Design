@@ -11,9 +11,9 @@ spring:
       headers: "*"
       methods: "*"
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB_NAME}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/tt
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -33,9 +33,14 @@ server:
   servlet:
     context-path: /api/v1/
   port: 8888
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api/v1
+  swagger-ui:
+    path: /api/v1
 logging:
   level:
     org:
       springframework:
         web: DEBUG
-
