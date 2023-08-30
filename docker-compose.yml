@@ -24,6 +24,7 @@ services:
       - postgres
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      FILE_MODE_AWS: false # change it to true if you want to  use s3 as storage provider and provide credentials
       AWS_ACCESS_KEY: from_env
       AWS_SECRET_KEY: from_env
       AWS_BUCKET_NAME: from_env
