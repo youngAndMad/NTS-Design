@@ -45,27 +45,6 @@
 
     <div class="container">
         <div style="width: 50%;padding: 20px">
-            <h1 style="margin-left: 25%"> Uploaded files info</h1>
-            <table class="table table-striped" id="fileTable">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">FileDate</th>
-                    <th scope="col">FileName</th>
-                    <th scope="col">FilePath</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div style="width: 50%;padding: 20px">
             <h1 style="margin-left: 45%">Logs</h1>
             <form>
                 <input id="ws_log" placeholder="Add log with web socket" type="text" required>
@@ -141,7 +120,11 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    stompClient.send('/fileInfo', {}, JSON.stringify({
+                        command: 'fileInfo',
+                        fileName: data.fileName,
+                        userId: user.id
+                    }))
                 })
                 .catch(error => {
                         alert(error)
@@ -180,24 +163,16 @@
     stompClient.connect({}, (frame) => {
         console.log('Connected: ' + frame)
 
-        stompClient.send('/addLog', {}, JSON.stringify(
-            {
-                command: 'addLog',
-                userId: user.id,
-                content: 'hello world'
-            }
-        ))
-
         stompClient.send('/getLogs', {}, JSON.stringify(
-            {
-                command: 'logs',
-                userId: user.id,
-            }
-        ))
+                {
+                    command: 'logs',
+                    userId: user.id,
+                }
+            )
+        )
 
         stompClient.subscribe('/topic/fileInfo/' + user.id, (response) => {
-            console.log('file info', response)
-            insertFileTableRow(JSON.parse(response.body))
+                alert(response.body)
         })
 
         stompClient.subscribe('/topic/getLogs/' + user.id, response => {
@@ -220,12 +195,12 @@
 
     const sendLogWithWS = document.getElementById('sendLogWithWS')
 
-    sendLogWithWS.addEventListener('click' , (e) => {
+    sendLogWithWS.addEventListener('click', (e) => {
         e.preventDefault()
 
         let value = document.getElementById('ws_log').value
 
-        if (!value || value === ''){
+        if (!value || value === '') {
             return
         }
 
@@ -236,37 +211,21 @@
     // end of websocket part
 
     // start update table part
-    const insertFileTableRow = (file) => {
-        const table = document.getElementById("fileTable").getElementsByTagName('tbody')[0]
-        const newRow = table.insertRow(table.rows.length)
-        const cell1 = newRow.insertCell(0)
-        const cell2 = newRow.insertCell(1)
-        const cell3 = newRow.insertCell(2)
-        const cell4 = newRow.insertCell(3)
-
-        cell1.innerHTML = file.id
-        cell2.innerHTML = file.uploadedOn
-        cell3.innerHTML = file.fileName
-        cell4.innerHTML = file.filePath
-    }
-
     const insertLogTableRow = (logs) => {
         const table = document.getElementById("logTable").getElementsByTagName('tbody')[0]
         // Clear existing rows
         while (table.firstChild) {
             table.removeChild(table.firstChild);
         }
-        for (const logId in logs) {
-            if (logs.hasOwnProperty(logId)) {
-                const log = logs[logId];
-                const newRow = table.insertRow();
-                const cell1 = newRow.insertCell(0);
-                const cell2 = newRow.insertCell(1);
+        logs.forEach(log => {
+            const newRow = table.insertRow();
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
 
-                cell1.innerHTML = log.id;
-                cell2.innerHTML = log.content;
-            }
-        }
+            cell1.innerHTML = log.id;
+            cell2.innerHTML = log.content;
+        })
+
     }
 
 
