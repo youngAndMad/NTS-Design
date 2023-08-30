@@ -1,6 +1,7 @@
 package danekerscode.technicaltask.service.impl;
 
 import danekerscode.technicaltask.exception.EntityNotFoundException;
+import danekerscode.technicaltask.exception.FileOperationException;
 import danekerscode.technicaltask.mapper.AmazonFileMapper;
 import danekerscode.technicaltask.model.AmazonFile;
 import danekerscode.technicaltask.repository.AmazonFileRepository;
@@ -26,11 +27,16 @@ public class AmazonFileServiceImpl implements AmazonFileService {
     @Value("${spring.cloud.aws.bucket.default.name}")
     private String defaultBucket;
 
+    @Value("${spring.cloud.aws.is_active}")
+    private Boolean S3IsUsing;
+
     @Override
     public void delete(Long id) {
         var file = findById(id);
 
-        s3Service.delete(defaultBucket, "%d/%s".formatted(file.getOwner().getId(), file.getFileName()));
+        if (S3IsUsing) {
+            s3Service.delete(defaultBucket, "%d/%s".formatted(file.getOwner().getId(), file.getFileName()));
+        }
 
         amazonFileRepository.delete(
                 this.findById(id)
@@ -59,12 +65,17 @@ public class AmazonFileServiceImpl implements AmazonFileService {
         model.setFilePath("http://localhost:8888/api/v1/download?id=" + model.getId());
 
 
-        s3Service.upload(defaultBucket, "%d/%s".formatted(owner.getId(), date.toString()), file);
+        if (S3IsUsing) {
+            s3Service.upload(defaultBucket, "%d/%s".formatted(owner.getId(), date.toString()), file);
+        }
         return amazonFileRepository.save(model);
     }
 
     @Override
     public byte[] download(Long id) {
+        if (!S3IsUsing) {
+            throw new FileOperationException("not downloadable file. Sorry!");
+        }
         var file = findById(id);
         var content = s3Service.download(defaultBucket, "%d/%s".formatted(id, file.getFileName()));
 

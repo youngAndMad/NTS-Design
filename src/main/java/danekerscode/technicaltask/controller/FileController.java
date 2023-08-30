@@ -21,7 +21,7 @@ public class FileController {
     private final AmazonFileService service;
     private final SimpMessagingTemplate messagingTemplate;
 
-        @PostMapping("simple-upload")
+    @PostMapping("simple-upload")
     ResponseEntity<?> simpleUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("user_id") Long userId,

@@ -22,6 +22,7 @@ spring:
     open-in-view: false
   cloud:
     aws:
+      is_active: ${FILE_MODE_AWS:false}
       region: us-east-1
       credentials:
         access-key: from_env

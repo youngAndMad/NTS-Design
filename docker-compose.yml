@@ -27,5 +27,3 @@ services:
       AWS_ACCESS_KEY: from_env
       AWS_SECRET_KEY: from_env
       AWS_BUCKET_NAME: from_env
-#    environment:
-#      - spring.cloud.aws.credentials.access-key: dde
