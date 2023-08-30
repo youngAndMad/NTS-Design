@@ -4,8 +4,13 @@ import danekerscode.technicaltask.model.Log;
 import danekerscode.technicaltask.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper
+@Mapper(
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+)
 public interface LogMapper {
 
     @Mapping(target = "owner", expression = "java(owner)")

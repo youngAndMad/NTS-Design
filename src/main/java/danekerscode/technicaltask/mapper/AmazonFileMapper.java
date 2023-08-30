@@ -4,10 +4,15 @@ import danekerscode.technicaltask.model.AmazonFile;
 import danekerscode.technicaltask.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.time.LocalDateTime;
 
-@Mapper
+@Mapper(
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+)
 public interface AmazonFileMapper {
 
     @Mapping(target = "uploadedOn", expression = "java(time)")
